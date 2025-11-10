@@ -1,0 +1,86 @@
+Create table (schema)
+
+-- Create the Nobel_win table
+CREATE TABLE Nobel_win (
+  year INT,
+  subject VARCHAR(100),
+  winner VARCHAR(200),
+  country VARCHAR(100),
+  category VARCHAR(100)
+);
+
+INSERT INTO Nobel_win (year, subject, winner, country, category) VALUES
+(1970, 'Physics', 'Hannes Alfven', 'Sweden', 'Scientist'),
+(1970, 'Physics', 'Louis Neel', 'France', 'Scientist'),
+(1970, 'Chemistry', 'Luis Federico Leloir', 'France', 'Scientist'),
+(1970, 'Physiology', 'Ulf von Euler', 'Sweden', 'Scientist'),
+(1970, 'Physiology', 'Bernard Katz', 'Germany', 'Scientist'),
+(1970, 'Literature', 'Aleksandr Solzhenitsyn', 'Russia', 'Linguist'),
+(1970, 'Economics', 'Paul Samuelson', 'USA', 'Economist'),
+(1970, 'Physiology', 'Julius Axelrod', 'USA', 'Scientist'),
+(1971, 'Physics', 'Dennis Gabor', 'Hungary', 'Scientist'),
+(1971, 'Chemistry', 'Gerhard Herzberg', 'Germany', 'Scientist'),
+(1971, 'Peace', 'Willy Brandt', 'Germany', 'Chancellor'),
+(1971, 'Literature', 'Pablo Neruda', 'Chile', 'Linguist'),
+(1971, 'Economics', 'Simon Kuznets', 'Russia', 'Economist'),
+(1978, 'Peace', 'Anwar al-Sadat', 'Egypt', 'President'),
+(1978, 'Peace', 'Menachem Begin', 'Israel', 'Prime Minister'),
+(1987, 'Chemistry', 'Donald J. Cram', 'USA', 'Scientist'),
+(1987, 'Chemistry', 'Jean-Marie Lehn', 'France', 'Scientist'),
+(1987, 'Physiology', 'Susumu Tonegawa', 'Japan', 'Scientist'),
+(1994, 'Economics', 'Reinhard Selten', 'Germany', 'Economist'),
+(1994, 'Peace', 'Yitzhak Rabin', 'Israel', 'Prime Minister'),
+(1987, 'Physics', 'Johannes Georg Bednorz', 'Germany', 'Scientist'),
+(1987, 'Literature', 'Joseph Brodsky', 'Russia', 'Linguist'),
+(1987, 'Economics', 'Robert Solow', 'USA', 'Economist'),
+(1994, 'Literature', 'Kenzaburo Oe', 'Japan', 'Linguist');
+
+INSERT INTO Nobel_win (year, subject, winner, country, category) VALUES
+(1970, 'Physics', 'Hannes Alfvén', 'Sweden', 'Physics'),
+(1970, 'Chemistry', 'Luis F. Leloir', 'Argentina', 'Chemistry'),
+(1970, 'Peace', 'Norman Borlaug', 'USA', 'Peace'),
+(1969, 'Chemistry', 'Georges Köhler', 'Germany', 'Chemistry'),
+(1971, 'Economics', 'Simon Kuznets', 'USA', 'Economics'),
+(1972, 'Physics', 'John Bardeen', 'USA', 'Physics');
+
+1) Nobel prize winners of the year 1970 — return year, subject, winner
+
+SELECT year, subject, winner
+FROM Nobel_win
+WHERE year = 1970;
+
+2) Nobel prize winners in Chemistry between 1965 and 1975 (inclusive) — return year, subject, winner, country
+
+SELECT year, subject, winner, country
+FROM Nobel_win
+WHERE subject = 'Chemistry'
+  AND year BETWEEN 1965 AND 1975;
+
+3) Winners whose first name matches 'Louis' — return year, subject, winner, country
+
+-- (Matches names that start with "Louis " or are exactly "Louis")
+
+SELECT year, subject, winner, country
+FROM Nobel_win
+WHERE winner = 'Louis'
+   OR winner LIKE 'Louis %';
+
+4) Winners for subjects that do NOT begin with 'P' — order by year DESC, winner ASC
+
+-- return year, subject, winner, country, category
+
+SELECT year, subject, winner, country, category
+FROM Nobel_win
+WHERE subject NOT LIKE 'P%'
+ORDER BY year DESC, winner ASC;
+
+5) Details of 1970 winners — order by subject ascending, except 'Chemistry' and 'Economics' which should come at the end.
+
+-- Return year, subject, winner, country, category
+
+SELECT year, subject, winner, country, category
+FROM Nobel_win
+WHERE year = 1970
+ORDER BY 
+  CASE WHEN subject IN ('Chemistry','Economics') THEN 1 ELSE 0 END,
+  subject ASC;
