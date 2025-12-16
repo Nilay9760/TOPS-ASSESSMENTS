@@ -1,0 +1,90 @@
+#include <iostream>
+using namespace std;
+
+// FoodOrder class demonstrating OOP
+class FoodOrder {
+private:
+    string customerName;
+    int choice, quantity;
+    float bill;
+
+public:
+    // Function to take customer name
+    void getCustomerName() {
+        cout << "Enter Customer Name: ";
+        getline(cin, customerName);
+    }
+
+    // Function to display menu
+    void showMenu() {
+        cout << "\n------ FOOD MENU ------\n";
+        cout << "1. Pizza   - Rs.150\n";
+        cout << "2. Burger  - Rs.100\n";
+        cout << "3. Sandwich- Rs.80\n";
+        cout << "4. Pasta   - Rs.120\n";
+        cout << "-----------------------\n";
+    }
+
+    // Function to take order
+    void takeOrder() {
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        cout << "Enter Quantity: ";
+        cin >> quantity;
+
+        calculateBill();
+    }
+
+    // Function to calculate bill using switch case
+    void calculateBill() {
+        switch (choice) {
+        case 1:
+            bill = 150 * quantity;
+            break;
+        case 2:
+            bill = 100 * quantity;
+            break;
+        case 3:
+            bill = 80 * quantity;
+            break;
+        case 4:
+            bill = 120 * quantity;
+            break;
+        default:
+            cout << "Invalid Choice!\n";
+            bill = 0;
+        }
+    }
+
+    // Function to display bill
+    void displayBill() {
+        cout << "\n------ BILL ------\n";
+        cout << "Customer Name: " << customerName << endl;
+        cout << "Total Bill: Rs." << bill << endl;
+        cout << "------------------\n";
+    }
+};
+
+int main() {
+    FoodOrder order;
+    char repeat;
+
+    // Ask customer name
+    order.getCustomerName();
+
+    do {
+        // Display menu and take order
+        order.showMenu();
+        order.takeOrder();
+        order.displayBill();
+
+        // Ask to continue
+        cout << "\nDo you want to order again? (y/n): ";
+        cin >> repeat;
+
+    } while (repeat == 'y' || repeat == 'Y');
+
+    cout << "\nThank you for ordering! Visit Again.\n";
+    return 0;
+}
